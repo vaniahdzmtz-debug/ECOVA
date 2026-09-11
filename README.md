@@ -54,11 +54,11 @@ Then open http://localhost:3000
 ## Self-test results (Module 1)
 
 1. **Pairing test** — Picked two different pairs, confirmed the verdict
-   sentence changed. Result: _pending_
+   sentence changed. Result: _Pass_
 2. **Data load test** — Refreshed `/core`, confirmed dropdowns load real
-   items from Supabase. Result: _pending_
+   items from Supabase. Result: _Pass_
 3. **Mobile test** — Checked `/core` on a phone-width screen, confirmed
-   cards stack cleanly. Result: _pending_
+   cards stack cleanly. Result: _Pass_
 
 ## What's next
 
