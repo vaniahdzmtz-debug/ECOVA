@@ -28,6 +28,9 @@ export default function NavBar() {
           <Link href="/" className={linkClass('/')}>
             Home
           </Link>
+          <Link href="/core" className={linkClass('/core')}>
+            Core
+          </Link>
           <Link href="/docs" className={linkClass('/docs')}>
             Docs
           </Link>

@@ -13,14 +13,7 @@ export default function RatingDial({ level = 'low', size = 52 }) {
 
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-      <circle
-        cx={center}
-        cy={center}
-        r={radius}
-        fill="none"
-        stroke="#E3DCC8"
-        strokeWidth="6"
-      />
+      <circle cx={center} cy={center} r={radius} fill="none" stroke="#E3DCC8" strokeWidth="6" />
       <circle
         cx={center}
         cy={center}

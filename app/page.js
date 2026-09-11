@@ -27,7 +27,6 @@ const EXAMPLES = [
 export default function HomePage() {
   return (
     <main>
-      {/* Hero */}
       <section className="max-w-6xl mx-auto px-6 md:px-10 pt-14 pb-16 md:pt-20 md:pb-24 grid md:grid-cols-2 gap-12 items-center">
         <div>
           <span className="inline-block text-xs font-medium tracking-wide uppercase text-clayDeep bg-clay/15 rounded-full px-3 py-1 mb-5">
@@ -42,10 +41,10 @@ export default function HomePage() {
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Link
-              href="/docs"
+              href="/core"
               className="inline-flex items-center gap-2 rounded-full bg-forest text-parchment font-medium px-6 py-3 hover:bg-forestDeep transition-colors"
             >
-              Explore choices
+              Compare two choices
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8">
                 <path d="M3 8h10M9 4l4 4-4 4" />
               </svg>
@@ -57,9 +56,6 @@ export default function HomePage() {
               See how it works
             </a>
           </div>
-          <p className="text-xs text-ink/50 mt-4">
-            The full Explore page is coming soon — see our roadmap in the repo.
-          </p>
         </div>
 
         <div className="bg-card border border-forest/10 rounded-3xl p-8 shadow-sm">
@@ -70,7 +66,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it helps */}
       <section className="bg-parchmentAlt border-y border-forest/10">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
           <div className="max-w-xl mb-12">
@@ -127,7 +122,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Preview grid */}
       <section className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
         <div className="flex items-end justify-between mb-10 flex-wrap gap-4">
           <div>
@@ -147,7 +141,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* How it works */}
       <section id="how-it-works" className="bg-forest">
         <div className="max-w-6xl mx-auto px-6 md:px-10 py-16 md:py-20">
           <div className="max-w-xl mb-14">

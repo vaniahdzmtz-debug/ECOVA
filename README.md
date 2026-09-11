@@ -1,30 +1,41 @@
 # Ecova
 
-A sustainability guidance website for university students. This is the
-Week 0 build: homepage, shared navigation, a docs placeholder, and the
-infrastructure (GitHub, Vercel, Supabase) that later weeks will build on.
+A sustainability guidance website for university students.
 
-## What's live this week
+## What's live
 
 - `/` — Homepage
+- `/core` — Compare two everyday choices (impact, price, convenience)
 - `/docs` — Placeholder page
-- Supabase is connected but not yet storing or serving any real data
 
 ## Environment variables
 
-Copy `.env.example` to a new file called `.env.local` and fill in your
-Supabase values (found in your Supabase project under **Settings > API
-Keys**):
+Copy `.env.example` to `.env.local` and fill in your Supabase values
+(found under **Settings > API Keys** in your Supabase project):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=your-project-url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-or-anon-key
 ```
 
-These same two values also need to be added in **Vercel > Project
-Settings > Environment Variables** so the live deployed site works too.
+These same two values must also be set in **Vercel > Project Settings >
+Environment Variables**.
 
-## Running locally (optional — only if you have Node.js installed)
+## Setting up the /core database table
+
+The `/core` page reads from a Supabase table called `core_items`. To
+create and fill it:
+
+1. Open your Supabase project
+2. Go to **SQL Editor > New query**
+3. Paste the contents of `supabase_seed_core_items.sql`
+4. Click **Run**
+
+If this table doesn't exist yet or is empty, `/core` will automatically
+fall back to a small built-in set of example items, so the page still
+works — but real data should come from Supabase.
+
+## Running locally (optional)
 
 ```
 npm install
@@ -35,23 +46,20 @@ Then open http://localhost:3000
 
 ## Deploying
 
-1. Push this project to a GitHub repository.
-2. In Vercel, import that GitHub repository as a new project.
-3. Add the two environment variables above in Vercel's project settings.
-4. Deploy. Vercel will give you a live URL.
+1. Push changes to GitHub.
+2. Vercel auto-deploys from the connected repository.
+3. Confirm the two environment variables are set in Vercel's project
+   settings.
 
-## Self-test results (Week 0)
+## Self-test results (Module 1)
 
-Record the outcome of these three checks after each deploy:
-
-1. **Deployment test** — Opened the live Vercel URL, homepage loaded fully,
-   no console errors. Result: _pending_
-2. **Navigation test** — Clicked Docs from Home, clicked Home from Docs,
-   current page is visually indicated in the nav. Result: _pending_
-3. **Responsive test** — Checked layout at 375px width and desktop width,
-   no overlap or breakage. Result: _pending_
+1. **Pairing test** — Picked two different pairs, confirmed the verdict
+   sentence changed. Result: _pending_
+2. **Data load test** — Refreshed `/core`, confirmed dropdowns load real
+   items from Supabase. Result: _pending_
+3. **Mobile test** — Checked `/core` on a phone-width screen, confirmed
+   cards stack cleanly. Result: _pending_
 
 ## What's next
 
-See `ROADMAP.md` for planned future work (Explore page with real Supabase
-data, About page).
+See `ROADMAP.md`.

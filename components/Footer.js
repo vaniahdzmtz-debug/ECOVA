@@ -8,6 +8,9 @@ export default function Footer() {
           <Link href="/" className="hover:text-forest transition-colors">
             Home
           </Link>
+          <Link href="/core" className="hover:text-forest transition-colors">
+            Core
+          </Link>
           <Link href="/docs" className="hover:text-forest transition-colors">
             Docs
           </Link>
