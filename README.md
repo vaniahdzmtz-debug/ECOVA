@@ -6,6 +6,7 @@ A sustainability guidance website for university students.
 
 - `/` — Homepage
 - `/core` — Compare two everyday choices (impact, price, convenience)
+- `/research` — Research and benchmarking dashboard
 - `/docs` — Placeholder page
 
 ## Environment variables
@@ -21,19 +22,19 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-publishable-or-anon-key
 These same two values must also be set in **Vercel > Project Settings >
 Environment Variables**.
 
-## Setting up the /core database table
+## Setting up the database tables
 
-The `/core` page reads from a Supabase table called `core_items`. To
-create and fill it:
+Both `/core` and `/research` read from Supabase tables. To create and fill
+them:
 
 1. Open your Supabase project
 2. Go to **SQL Editor > New query**
-3. Paste the contents of `supabase_seed_core_items.sql`
-4. Click **Run**
+3. Paste the contents of `supabase_seed_core_items.sql`, click **Run**
+4. New query again, paste `supabase_seed_research_items.sql`, click **Run**
 
-If this table doesn't exist yet or is empty, `/core` will automatically
-fall back to a small built-in set of example items, so the page still
-works — but real data should come from Supabase.
+If either table doesn't exist yet or is empty, the matching page will
+automatically fall back to a small built-in set of example items, so the
+page still works — but real data should come from Supabase.
 
 ## Running locally (optional)
 
@@ -51,14 +52,16 @@ Then open http://localhost:3000
 3. Confirm the two environment variables are set in Vercel's project
    settings.
 
-## Self-test results (Module 1)
+## Self-test results (Week 2)
 
-1. **Pairing test** — Picked two different pairs, confirmed the verdict
-   sentence changed. Result: _Pass_
-2. **Data load test** — Refreshed `/core`, confirmed dropdowns load real
-   items from Supabase. Result: _Pass_
-3. **Mobile test** — Checked `/core` on a phone-width screen, confirmed
-   cards stack cleanly. Result: _Pass_
+1. **Search test** — Typed "Yuka" in the search box, confirmed only that
+   row appeared. Result: _pending_
+2. **Filter test** — Filtered to "Substitute," confirmed only the 3
+   substitute rows showed. Result: _pending_
+3. **Data load test** — Refreshed `/research`, confirmed the table and
+   dashboard widget loaded real data from Supabase. Result: _pending_
+4. **Human validation conversation** — Talked to a real person in Ecova's
+   target audience about the problem. Result: _pending_
 
 ## What's next
 

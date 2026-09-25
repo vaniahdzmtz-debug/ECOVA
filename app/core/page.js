@@ -40,19 +40,13 @@ export default function CorePage() {
   const [items, setItems] = useState(FALLBACK_ITEMS);
   const [optionAId, setOptionAId] = useState(FALLBACK_ITEMS[0].id);
   const [optionBId, setOptionBId] = useState(FALLBACK_ITEMS[1].id);
-  const [result, setResult] = useState(null); // { a, b, verdict } | 'same' | null
+  const [result, setResult] = useState(null);
 
   useEffect(() => {
     async function loadItems() {
-      if (!supabase) {
-        console.warn('Supabase is not configured — using fallback comparison items.');
-        return;
-      }
+      if (!supabase) return;
       const { data, error } = await supabase.from('core_items').select('*').order('id');
-      if (error || !data || data.length === 0) {
-        console.warn('Could not load core_items from Supabase — using fallback data.', error);
-        return;
-      }
+      if (error || !data || data.length === 0) return;
       setItems(data);
       setOptionAId(data[0].id);
       setOptionBId(data[1]?.id ?? data[0].id);

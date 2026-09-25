@@ -24,12 +24,15 @@ export default function NavBar() {
           </svg>
           <span className="font-display text-xl font-medium text-forest">Ecova</span>
         </Link>
-        <nav className="flex items-center gap-8 text-sm">
+        <nav className="flex items-center gap-6 sm:gap-8 text-sm">
           <Link href="/" className={linkClass('/')}>
             Home
           </Link>
           <Link href="/core" className={linkClass('/core')}>
             Core
+          </Link>
+          <Link href="/research" className={linkClass('/research')}>
+            Research
           </Link>
           <Link href="/docs" className={linkClass('/docs')}>
             Docs
