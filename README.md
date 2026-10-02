@@ -54,14 +54,19 @@ Then open http://localhost:3000
 
 ## Self-test results (Week 2)
 
-1. **Search test** — Typed "Yuka" in the search box, confirmed only that
-   row appeared. Result: _pending_
+Screenshots for each test below are included in the submitted document.
+
+1. **Search test** — Typed "Yuka" in the search box on `/research`, confirmed
+   only that row appeared. Result: **Pass**
 2. **Filter test** — Filtered to "Substitute," confirmed only the 3
-   substitute rows showed. Result: _pending_
+   substitute rows showed. Result: **Pass**
 3. **Data load test** — Refreshed `/research`, confirmed the table and
-   dashboard widget loaded real data from Supabase. Result: _pending_
-4. **Human validation conversation** — Talked to a real person in Ecova's
-   target audience about the problem. Result: _pending_
+   dashboard widget loaded real data from Supabase. Result: **Pass**
+4. **Mobile usability fix verification** — After fixing the iOS auto-zoom
+   and cramped table on small screens, re-tested on a phone-width view to
+   confirm both issues were resolved. Result: **Pass**
+5. **Human validation conversation** — Talked to a real person in Ecova's
+   target audience about the problem. Result: **Pass, see Decision Note**
 
 ## What's next
 
