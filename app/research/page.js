@@ -22,12 +22,12 @@ export default function ResearchPage() {
   useEffect(() => {
     async function loadItems() {
       if (!supabase) {
-        console.warn('Supabase is not configured — using fallback research items.');
+        console.warn('Supabase is not configured â€” using fallback research items.');
         return;
       }
       const { data, error } = await supabase.from('research_items').select('*').order('id');
       if (error || !data || data.length === 0) {
-        console.warn('Could not load research_items from Supabase — using fallback data.', error);
+        console.warn('Could not load research_items from Supabase â€” using fallback data.', error);
         return;
       }
       setItems(data);
@@ -83,8 +83,8 @@ export default function ResearchPage() {
         </h1>
         <p className="text-ink/75 max-w-2xl">
           This page documents research into existing tools and habits people
-          already use when trying to make more sustainable decisions — both
-          real apps and informal substitutes — to understand where Ecova
+          already use when trying to make more sustainable decisions â€” both
+          real apps and informal substitutes â€” to understand where Ecova
           genuinely fits.
         </p>
       </section>
@@ -119,7 +119,7 @@ export default function ResearchPage() {
             convenience are weighed far more heavily than environmental
             impact in everyday decisions. No dedicated consumer app was found
             that combines impact, price, and convenience specifically for
-            this market — this is the gap Ecova is built to fill.
+            this market â€” this is the gap Ecova is built to fill.
           </p>
         </div>
       </section>
@@ -136,12 +136,14 @@ export default function ResearchPage() {
             placeholder="Search by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="flex-1 border border-forest/20 rounded-xl px-4 py-2.5 bg-card text-ink placeholder:text-ink/40 text-sm"
+            className="flex-1 border border-forest/20 rounded-xl px-4 py-2.5 bg-card text-ink placeholder:text-ink/40 text-base"
+            style={{ fontSize: '16px' }}
           />
           <select
             value={typeFilter}
             onChange={(e) => setTypeFilter(e.target.value)}
-            className="border border-forest/20 rounded-xl px-4 py-2.5 bg-card text-ink text-sm"
+            className="border border-forest/20 rounded-xl px-4 py-2.5 bg-card text-ink text-base"
+            style={{ fontSize: '16px' }}
           >
             <option value="all">All types</option>
             <option value="competitor">Competitor</option>
@@ -155,7 +157,7 @@ export default function ResearchPage() {
               <tr className="border-b border-forest/10 text-left text-xs uppercase tracking-wide text-ink/50">
                 <th className="px-5 py-3">Name</th>
                 <th className="px-5 py-3">Type</th>
-                <th className="px-5 py-3">Category</th>
+                <th className="px-5 py-3 hidden sm:table-cell">Category</th>
                 <th className="px-5 py-3">Notes</th>
               </tr>
             </thead>
@@ -177,7 +179,7 @@ export default function ResearchPage() {
                       {TYPE_LABEL[item.type]}
                     </span>
                   </td>
-                  <td className="px-5 py-3 text-ink/70">{item.category}</td>
+                  <td className="px-5 py-3 text-ink/70 hidden sm:table-cell">{item.category}</td>
                   <td className="px-5 py-3 text-ink/70">{item.notes}</td>
                 </tr>
               ))}
@@ -205,7 +207,7 @@ export default function ResearchPage() {
                   risk.impact === 'High' ? 'text-rust' : 'text-clayDeep'
                 }`}
               >
-                {risk.impact} impact · {risk.likelihood} likelihood
+                {risk.impact} impact Â· {risk.likelihood} likelihood
               </p>
               <p className="text-sm text-ink/80">{risk.text}</p>
             </div>
