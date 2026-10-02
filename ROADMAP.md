@@ -11,11 +11,15 @@
 - Supabase actually storing and serving data for the first time
 - Status: complete
 
-## Week 2 — /research benchmarking dashboard (this build)
+## Week 2 — /research benchmarking dashboard
 - `/research` page: research intake, 5 global examples, Mexico-specific
   findings, an 8-item searchable/filterable competitor and substitute
   table, a risk map, and a live dashboard widget
 - New Supabase table: `research_items`
+- Fixed a real mobile usability issue found during testing: the search
+  input was triggering iOS auto-zoom, and the competitors table felt
+  cramped on narrow screens. Increased input font size to 16px and hid
+  the less critical "Category" column on small screens.
 - Status: complete
 
 ## Later
