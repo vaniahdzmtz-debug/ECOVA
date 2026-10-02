@@ -1,9 +1,6 @@
-# Iteration Log — Module 1
-
-After building the /core comparison feature, initial testing revealed
-the comparison items appeared in Spanish, even though the assignment
-required English. This happened because the backup data built into the
-code hadn't been updated when the Supabase database was switched to
-English. Identified the issue, updated the fallback file, redeployed,
-and retested — confirming all items now display correctly in English
-across both the database and its backup.
+Iteration Log
+Module 1
+After building the /core comparison feature, initial testing revealed the comparison items appeared in Spanish, even though the assignment required English. This happened because the backup data built into the code hadn't been updated when the Supabase database was switched to English. I identified the issue, updated the fallback file, redeployed, and retested — confirming all items now display correctly in English across both the database and its backup.
+Week 2
+While setting up the research_items table in Supabase, I initially pasted the wrong SQL file (the core_items seed script instead of the new research_items one), which produced an error. I corrected this immediately by pasting the right file.
+After testing the live /research page, I noticed a real usability issue: on phones, tapping the search box caused the browser to automatically zoom in, since the text was smaller than the 16px minimum that prevents this on iOS. The competitors table also felt cramped on narrow screens. I fixed both by increasing the input font size to 16px and hiding the less critical "Category" column on small screens, keeping Name, Type, and Notes visible. I tested this again on a phone-width screen afterward to confirm the fix worked.
