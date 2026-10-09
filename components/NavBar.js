@@ -13,7 +13,7 @@ export default function NavBar() {
 
   return (
     <header className="sticky top-0 z-30 bg-parchment/90 backdrop-blur-sm border-b border-forest/10">
-      <div className="max-w-6xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+      <div className="max-w-6xl mx-auto px-6 md:px-10 min-h-16 py-2 flex flex-wrap items-center justify-between gap-y-1">
         <Link href="/" className="flex items-center gap-2">
           <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
             <circle cx="13" cy="13" r="12" stroke="#1F3A2E" strokeWidth="1.5" />
@@ -24,7 +24,7 @@ export default function NavBar() {
           </svg>
           <span className="font-display text-xl font-medium text-forest">Ecova</span>
         </Link>
-        <nav className="flex items-center gap-6 sm:gap-8 text-sm">
+        <nav className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 sm:gap-6 text-sm">
           <Link href="/" className={linkClass('/')}>
             Home
           </Link>
@@ -33,6 +33,12 @@ export default function NavBar() {
           </Link>
           <Link href="/research" className={linkClass('/research')}>
             Research
+          </Link>
+          <Link href="/product" className={linkClass('/product')}>
+            Product
+          </Link>
+          <Link href="/pricing" className={linkClass('/pricing')}>
+            Pricing
           </Link>
           <Link href="/docs" className={linkClass('/docs')}>
             Docs
