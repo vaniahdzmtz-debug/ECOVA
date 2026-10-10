@@ -80,7 +80,7 @@ export default function PricingPage() {
       .order('created_at', { ascending: false })
       .limit(20);
     if (err) {
-      setListNote('Could not load saved scenarios right now. The calculator still works.');
+      setListNote('Could not load saved scenarios right now. The calculator still works. (Details: ' + (err.message || 'unknown error') + ')');
       return;
     }
     setSaved(data || []);
@@ -125,7 +125,10 @@ export default function PricingPage() {
     };
     const { error: err } = await supabase.from('pricing_scenarios').insert(row);
     if (err) {
-      setMessage({ text: 'Something went wrong while saving. Nothing was saved.', ok: false });
+      setMessage({
+        text: 'Something went wrong while saving. Nothing was saved. (Details: ' + (err.message || 'unknown error') + ')',
+        ok: false,
+      });
       return;
     }
     setMessage({ text: 'Saved!', ok: true });
