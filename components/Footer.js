@@ -20,6 +20,9 @@ export default function Footer() {
           <Link href="/pricing" className="hover:text-forest transition-colors">
             Pricing
           </Link>
+          <Link href="/marketing" className="hover:text-forest transition-colors">
+            Marketing
+          </Link>
           <Link href="/docs" className="hover:text-forest transition-colors">
             Docs
           </Link>

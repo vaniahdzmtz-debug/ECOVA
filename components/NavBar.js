@@ -24,7 +24,7 @@ export default function NavBar() {
           </svg>
           <span className="font-display text-xl font-medium text-forest">Ecova</span>
         </Link>
-        <nav className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 sm:gap-6 text-sm">
+        <nav className="flex flex-wrap items-center justify-between sm:justify-end w-full sm:w-auto gap-x-4 gap-y-1 sm:gap-x-6 text-sm">
           <Link href="/" className={linkClass('/')}>
             Home
           </Link>
@@ -39,6 +39,9 @@ export default function NavBar() {
           </Link>
           <Link href="/pricing" className={linkClass('/pricing')}>
             Pricing
+          </Link>
+          <Link href="/marketing" className={linkClass('/marketing')}>
+            Marketing
           </Link>
           <Link href="/docs" className={linkClass('/docs')}>
             Docs
