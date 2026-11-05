@@ -18,6 +18,11 @@ module.exports = {
         clayDeep: '#8C5323',
         rust: '#B5502D',
         ink: '#2A2A24',
+        lake: '#1F6F8B',
+        lakeDeep: '#164F63',
+        sky: '#DCEEF5',
+        leaf: '#3E9B6A',
+        mint: '#D6EFE0',
       },
       fontFamily: {
         display: ['var(--font-fraunces)', 'serif'],
