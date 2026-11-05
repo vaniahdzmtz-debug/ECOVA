@@ -10,8 +10,17 @@ export default function AbTester({ test }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState({ text: '', ok: false });
   const [note, setNote] = useState('');
+  const [voted, setVoted] = useState(null);
+  const storageKey = 'ecova_ab_vote_' + test.id;
 
   useEffect(() => {
+    // Remember in this browser that the person already voted in this test.
+    try {
+      const saved = window.localStorage.getItem(storageKey);
+      if (saved === 'A' || saved === 'B') setVoted(saved);
+    } catch (e) {
+      // Storage can be blocked. The page still works without it.
+    }
     loadCounts();
   }, []);
 
@@ -38,7 +47,7 @@ export default function AbTester({ test }) {
   }
 
   async function vote(choice) {
-    if (busy) return;
+    if (busy || voted) return;
     if (!supabase) {
       setMessage({ text: 'Voting is not set up yet. Nothing was saved.', ok: false });
       return;
@@ -54,6 +63,12 @@ export default function AbTester({ test }) {
       });
       setBusy(false);
       return;
+    }
+    setVoted(choice);
+    try {
+      window.localStorage.setItem(storageKey, choice);
+    } catch (e) {
+      // If storage is blocked, the vote is still saved.
     }
     setMessage({ text: 'Thanks! Your vote was saved.', ok: true });
     await loadCounts();
@@ -77,7 +92,7 @@ export default function AbTester({ test }) {
           <button
             key={o.key}
             type="button"
-            disabled={busy}
+            disabled={busy || voted !== null}
             onClick={() => vote(o.key)}
             className={`text-left rounded-2xl border-2 ${o.border} p-5 bg-card hover:bg-parchment disabled:opacity-60 transition-colors`}
           >
@@ -94,6 +109,9 @@ export default function AbTester({ test }) {
       </div>
       {message.text && (
         <p className={`text-sm mt-3 ${message.ok ? 'text-leaf' : 'text-rust'}`}>{message.text}</p>
+      )}
+      {voted && !message.text && (
+        <p className="text-sm mt-3 text-leaf">You already voted in this test (Option {voted}). Thanks!</p>
       )}
       {note && <p className="text-sm mt-3 text-ink/60">{note}</p>}
     </div>
