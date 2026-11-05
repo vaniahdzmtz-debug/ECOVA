@@ -1,4 +1,9 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { supabase } from '../../lib/supabaseClient';
 import CopyButton from '../../components/CopyButton';
+import AbTester from '../../components/AbTester';
 import {
   BRAND,
   PERSONA,
@@ -6,15 +11,61 @@ import {
   POSTS,
   SCRIPTS,
   CALENDAR,
+  AB_TESTS,
+  toText,
   itemLabel,
   itemPlatform,
-  toText,
 } from '../../lib/marketingContent';
 
 const sectionTitle = 'font-display text-2xl text-forest mb-4';
 const card = 'bg-card border border-lake/15 rounded-2xl';
 
 export default function MarketingPage() {
+  const [saved, setSaved] = useState([]);
+  const [listNote, setListNote] = useState('');
+  const [message, setMessage] = useState({ text: '', ok: false });
+
+  useEffect(() => {
+    loadSaved();
+  }, []);
+
+  async function loadSaved() {
+    if (!supabase) {
+      setListNote('Saving is not set up yet. The content still works.');
+      return;
+    }
+    const { data, error } = await supabase
+      .from('marketing_assets')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(20);
+    if (error) {
+      setListNote('Could not load saved assets right now. (Details: ' + (error.message || 'unknown error') + ')');
+      return;
+    }
+    setSaved(data || []);
+    setListNote('');
+  }
+
+  async function saveAsset(assetType, title, body) {
+    if (!supabase) {
+      setMessage({ text: 'Saving is not set up yet. Nothing was saved.', ok: false });
+      return;
+    }
+    const { error } = await supabase
+      .from('marketing_assets')
+      .insert({ asset_type: assetType, title: title.slice(0, 120), body });
+    if (error) {
+      setMessage({
+        text: 'Something went wrong while saving. Nothing was saved. (Details: ' + (error.message || 'unknown error') + ')',
+        ok: false,
+      });
+      return;
+    }
+    setMessage({ text: 'Saved! "' + title.slice(0, 60) + '" is in the list below.', ok: true });
+    loadSaved();
+  }
+
   const platformBadge = (platform) =>
     platform.startsWith('Instagram') ? 'bg-sky text-lakeDeep' : 'bg-mint text-forest';
 
@@ -28,6 +79,16 @@ export default function MarketingPage() {
         Everything we need to explain Ecova to {PERSONA.name} and test what works: brand, persona,
         copy, posts, video scripts, a 14-day plan, and a headline test.
       </p>
+
+      {message.text && (
+        <p
+          className={`sticky top-20 z-20 mb-8 rounded-xl px-4 py-3 text-sm ${
+            message.ok ? 'bg-mint text-forest' : 'bg-rust/10 text-rust'
+          }`}
+        >
+          {message.text}
+        </p>
+      )}
 
       <h2 className={sectionTitle}>1. Brand system</h2>
       <div className={`${card} p-6 mb-12 grid md:grid-cols-2 gap-8`}>
@@ -120,6 +181,13 @@ export default function MarketingPage() {
             <p className="text-sm text-lake mt-2">{p.hashtags.join(' ')}</p>
             <div className="mt-4 flex gap-2 flex-wrap">
               <CopyButton text={toText('post', p)} />
+              <button
+                type="button"
+                onClick={() => saveAsset('post', p.hook, toText('post', p))}
+                className="text-base sm:text-sm rounded-full bg-leaf text-white px-4 py-1.5 hover:opacity-90"
+              >
+                Save
+              </button>
             </div>
           </div>
         ))}
@@ -149,6 +217,13 @@ export default function MarketingPage() {
             </p>
             <div className="mt-4 flex gap-2 flex-wrap">
               <CopyButton text={toText('script', s)} />
+              <button
+                type="button"
+                onClick={() => saveAsset('script', s.title, toText('script', s))}
+                className="text-base sm:text-sm rounded-full bg-leaf text-white px-4 py-1.5 hover:opacity-90"
+              >
+                Save
+              </button>
             </div>
           </div>
         ))}
@@ -179,6 +254,43 @@ export default function MarketingPage() {
       </div>
       <div className="mb-12">
         <CopyButton text={toText('calendar')} label="Export calendar" />
+      </div>
+
+      <h2 className={sectionTitle}>7. A/B headline tests</h2>
+      <div className="space-y-5 mb-12">
+        {AB_TESTS.map((t) => (
+          <AbTester key={t.id} test={t} />
+        ))}
+      </div>
+
+      <h2 className={sectionTitle}>8. Saved assets</h2>
+      <div className={`${card} overflow-x-auto`}>
+        <table className="w-full text-sm min-w-[480px]">
+          <thead className="bg-mint text-forest text-xs uppercase tracking-wide">
+            <tr>
+              <th className="text-left p-3">Type</th>
+              <th className="text-left p-3">Title</th>
+              <th className="text-left p-3">Saved</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-forest/10">
+            {saved.length === 0 ? (
+              <tr>
+                <td className="p-3 text-ink/60" colSpan={3}>
+                  {listNote || 'Nothing saved yet. Click Save on a post or a script.'}
+                </td>
+              </tr>
+            ) : (
+              saved.map((a) => (
+                <tr key={a.id}>
+                  <td className="p-3 capitalize">{a.asset_type}</td>
+                  <td className="p-3">{a.title}</td>
+                  <td className="p-3">{new Date(a.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </main>
   );
