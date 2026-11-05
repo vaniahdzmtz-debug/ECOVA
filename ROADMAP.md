@@ -11,15 +11,22 @@
 - Supabase actually storing and serving data for the first time
 - Status: complete
 
-## Week 2 — /research benchmarking dashboard
+## Week 2 — /research benchmarking dashboard (this build)
 - `/research` page: research intake, 5 global examples, Mexico-specific
   findings, an 8-item searchable/filterable competitor and substitute
   table, a risk map, and a live dashboard widget
 - New Supabase table: `research_items`
-- Fixed a real mobile usability issue found during testing: the search
-  input was triggering iOS auto-zoom, and the competitors table felt
-  cramped on narrow screens. Increased input font size to 16px and hid
-  the less critical "Category" column on small screens.
+- Status: complete
+
+## Week 3 — /product and /pricing
+- Feature map, three pricing tiers in MXN, revenue simulator, saved scenarios
+- New Supabase table: `pricing_scenarios`
+- Status: complete
+
+## Week 4 — Marketing engine and landing page (this build)
+- Upgraded homepage and `/marketing` page with brand system, persona, copy, 10 posts, 3 video scripts, 14-day calendar
+- Two A/B tests with real votes, saved marketing assets
+- New Supabase tables: `marketing_assets`, `ab_votes`
 - Status: complete
 
 ## Later
