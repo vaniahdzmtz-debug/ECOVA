@@ -1,3 +1,4 @@
+import CopyButton from '../../components/CopyButton';
 import {
   BRAND,
   PERSONA,
@@ -7,6 +8,7 @@ import {
   CALENDAR,
   itemLabel,
   itemPlatform,
+  toText,
 } from '../../lib/marketingContent';
 
 const sectionTitle = 'font-display text-2xl text-forest mb-4';
@@ -100,6 +102,9 @@ export default function MarketingPage() {
           ))}
         </ul>
         <p className="text-sm text-ink/75 mt-3">Button: &quot;{LANDING_COPY.button}&quot;</p>
+        <div className="mt-4">
+          <CopyButton text={toText('landing')} />
+        </div>
       </div>
 
       <h2 className={sectionTitle}>4. Social posts ({POSTS.length})</h2>
@@ -113,6 +118,9 @@ export default function MarketingPage() {
             <p className="font-medium text-forest mb-1">{p.hook}</p>
             <p className="text-sm text-ink/75">{p.caption}</p>
             <p className="text-sm text-lake mt-2">{p.hashtags.join(' ')}</p>
+            <div className="mt-4 flex gap-2 flex-wrap">
+              <CopyButton text={toText('post', p)} />
+            </div>
           </div>
         ))}
       </div>
@@ -139,12 +147,15 @@ export default function MarketingPage() {
             <p className="text-sm text-ink/80 mt-2">
               <b>Call to action:</b> {s.cta}
             </p>
+            <div className="mt-4 flex gap-2 flex-wrap">
+              <CopyButton text={toText('script', s)} />
+            </div>
           </div>
         ))}
       </div>
 
       <h2 className={sectionTitle}>6. 14-day campaign calendar</h2>
-      <div className={`${card} overflow-x-auto mb-12`}>
+      <div className={`${card} overflow-x-auto mb-3`}>
         <table className="w-full text-sm min-w-[560px]">
           <thead className="bg-sky text-lakeDeep text-xs uppercase tracking-wide">
             <tr>
@@ -165,6 +176,9 @@ export default function MarketingPage() {
             ))}
           </tbody>
         </table>
+      </div>
+      <div className="mb-12">
+        <CopyButton text={toText('calendar')} label="Export calendar" />
       </div>
     </main>
   );
