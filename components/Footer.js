@@ -23,6 +23,9 @@ export default function Footer() {
           <Link href="/marketing" className="hover:text-forest transition-colors">
             Marketing
           </Link>
+          <Link href="/chat" className="hover:text-forest transition-colors">
+            Chat
+          </Link>
           <Link href="/docs" className="hover:text-forest transition-colors">
             Docs
           </Link>

@@ -43,6 +43,9 @@ export default function NavBar() {
           <Link href="/marketing" className={linkClass('/marketing')}>
             Marketing
           </Link>
+          <Link href="/chat" className={linkClass('/chat')}>
+            Chat
+          </Link>
           <Link href="/docs" className={linkClass('/docs')}>
             Docs
           </Link>
