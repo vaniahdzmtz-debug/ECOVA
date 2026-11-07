@@ -37,3 +37,20 @@ After testing the live /research page, I noticed a real usability issue. On phon
 
 ### Process note
 - This week I committed from my own computer with GitHub Desktop, using a clear message for each step, instead of "Add files via upload."
+
+## Week 5: Ecova guide (/chat)
+
+### Bug 1: Page crashed at the "Is this right?" step
+- What happened: After tapping the third answer, the page showed "Application error: a client-side exception has occurred."
+- Cause: A helper function used by the checkpoint box was missing from the import list in the page file.
+- Fix: Added the missing import and redeployed. Tested the full flow again, from the first question to the result.
+- Commit: fix chat crash on checkpoint step
+
+### Improvement 1: Clearer first question (from tester feedback)
+- What happened: Fernanda said the buttons in the first question were confusing because she wasn't sure what each one meant.
+- Fix: Each button now has a short example (for example, Water: "Reusable bottle or bottled water"), and the question says "Pick the topic that fits best." I also reworded an awkward price sentence in the water result.
+- Commit: clarify first question buttons with examples after tester feedback
+
+### Feedback not built this week
+- Danonino wanted links or online examples with the recommendation. Not built: outside this week's scope (no outside links). Idea for the next version.
+- A third tester wanted more options than price and impact. Not built: outside this week's scope (3 topics only). Idea for the next version.
