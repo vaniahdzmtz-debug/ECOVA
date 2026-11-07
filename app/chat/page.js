@@ -5,6 +5,7 @@ import ChatMessage from '../../components/ChatMessage';
 import {
   TOPICS, PRIORITIES, FREQUENCIES, INTRO, LABEL, TOPIC_HINT,
   recommend, summaryLine, labelFor,
+  checkMessage, guardrailReply, topicFromText,
 } from '../../lib/chatLogic';
 
 const SAVE_FAIL = 'Results could not be saved right now.';
@@ -98,6 +99,44 @@ export default function ChatPage() {
     startOver();
   }
 
+  function handleSend(e) {
+    e.preventDefault();
+    const value = text.trim();
+    if (!value || step === 'ended') return;
+    setText('');
+    const kind = checkMessage(value);
+
+    if (kind === 'personal') {
+      add({ kind: 'user', text: '(message hidden: personal information)' }, { kind: 'guard', text: guardrailReply('personal') });
+      return;
+    }
+    if (kind === 'harm') {
+      add({ kind: 'user', text: value }, { kind: 'guard', text: guardrailReply('harm') });
+      setStep('ended');
+      return;
+    }
+    if (kind === 'health' || kind === 'money') {
+      add({ kind: 'user', text: value }, { kind: 'guard', text: guardrailReply(kind) });
+      return;
+    }
+    // ok
+    if (step === 'q1') {
+      const t = topicFromText(value);
+      if (t) {
+        pickTopic(t, value);
+        return;
+      }
+    }
+    add({ kind: 'user', text: value });
+    if (step === 'q1') {
+      add({ kind: 'guard', text: guardrailReply('offtopic') });
+    } else if (step === 'result') {
+      add({ kind: 'guard', text: guardrailReply('offtopic') });
+    } else {
+      add({ kind: 'bot', text: 'Please tap one of the buttons above to continue.' });
+    }
+  }
+
 
 
 
@@ -182,7 +221,21 @@ export default function ChatPage() {
           </div>
         )}
 
+        {step === 'ended' && (
+          <p className="text-sm text-ink/60">The chat has stopped. You can start over below.</p>
+        )}
 
+        <form onSubmit={handleSend} className="flex gap-2 pt-2">
+          <input
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            disabled={step === 'ended'}
+            placeholder="Type a message…"
+            aria-label="Type a message"
+            className="flex-1 min-w-0 rounded-full border border-forest/20 px-4 py-2.5 text-sm disabled:opacity-40"
+          />
+          <button type="submit" disabled={step === 'ended'} className="shrink-0 rounded-full bg-lake text-white px-5 py-2.5 text-sm disabled:opacity-40">Send</button>
+        </form>
         <div className="flex justify-between items-center">
           <button onClick={startOver} className="text-xs text-lake underline whitespace-nowrap mr-3">Start over</button>
           <p className="text-xs text-ink/50">This conversation is stored anonymously to improve Ecova.</p>
