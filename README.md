@@ -87,3 +87,29 @@ See `ROADMAP.md`.
 4. **S2** — Copy and Export copy the right text.
 5. **S3** — Save adds a row to `marketing_assets` and it is still listed after a refresh.
 6. **Bug found and fixed** — voting repeatedly was allowed; now one vote per browser per test.
+
+## Week 5: /chat (Ecova guide)
+
+- `/chat` is a guided assistant that helps a young person in Mexico choose between two everyday options (water, clothing, getting around). It asks 3 questions, shows a checkpoint ("Is this right?"), then gives a recommendation using only the Ecova catalog.
+- It is **rule-based, not AI**. The rules live in `lib/chatLogic.js`. There is no paid API.
+- Guardrails: off-topic, health, money and legal questions are refused politely; harm words stop the chat and point to 911; emails and phone numbers are never saved. Off-topic questions can be saved for team review (checkpoint 2).
+- Supabase tables `chat_sessions` and `chat_feedback` (see `supabase_chat.sql`) store confirmed chats and thumbs up/down feedback. Without Supabase variables the chat still works and says results were not saved.
+
+### Self-test results (Week 5)
+
+1. **S1** — Three answer combinations gave the expected recommendation: water / lowest price / every day gave the reusable bottle with the 9 to 13 bottles note; water / lowest price / rarely gave bottled water; clothing / lowest impact / a few times a week gave second-hand clothing. Result: passed.
+2. **S2** — A health question and an off-topic question were refused. A typed email was hidden and not saved. The off-topic question was saved for team review with status `flagged`. Result: passed.
+3. **S3** — A finished chat and a thumbs up created one row in `chat_sessions` and one row in `chat_feedback` with the same session id. Result: passed.
+
+### External tests (Week 5)
+
+Three people who are not the developer tested `/chat` on their phones or computers.
+
+1. **Fernanda** — The first-question buttons were confusing. Changed: each button now has a short example, and the question says "Pick the topic that fits best."
+2. **Danonino** — Wanted links or online examples with the recommendation. Not changed: outside this week's scope, saved as a next-version idea.
+3. **Third tester** — Wanted more options than price and impact. Not changed: outside this week's scope, saved as a next-version idea.
+
+### Bugs found and fixed (Week 5)
+
+- The page crashed on the "Is this right?" step because one helper function was missing from an import. Fixed and redeployed.
+- The price sentence in the water result read awkwardly. Reworded.

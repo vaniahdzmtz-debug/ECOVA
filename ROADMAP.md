@@ -23,7 +23,11 @@
 - New Supabase table: `pricing_scenarios`
 - Status: complete
 
-## Week 4 — Marketing engine and landing page (this build)
+## Week 5 — Ecova guide chatbot (this build)
+- `/chat` rule-based guided assistant with two human checkpoints
+- New Supabase tables: `chat_sessions`, `chat_feedback`
+
+## Week 4 — Marketing engine and landing page
 - Upgraded homepage and `/marketing` page with brand system, persona, copy, 10 posts, 3 video scripts, 14-day calendar
 - Two A/B tests with real votes, saved marketing assets
 - New Supabase tables: `marketing_assets`, `ab_votes`
