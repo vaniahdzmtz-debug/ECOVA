@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { supabase } from '../../lib/supabaseClient';
 import ChatMessage from '../../components/ChatMessage';
 import {
   TOPICS, PRIORITIES, FREQUENCIES, INTRO, LABEL, TOPIC_HINT,
@@ -93,6 +94,28 @@ export default function ChatPage() {
     const rec = recommend(answers);
     add({ kind: 'user', text: 'Confirm' }, { kind: 'result', rec });
     setStep('result');
+    if (!supabase) {
+      setSaveNote(SAVE_FAIL);
+      return;
+    }
+    try {
+      const { data, error } = await supabase
+        .from('chat_sessions')
+        .insert({
+          category: answers.category,
+          priority: answers.priority,
+          frequency: answers.frequency,
+          recommendation: rec.title,
+          status: 'completed',
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      setSessionId(data.id);
+      setSaveNote('');
+    } catch (e) {
+      setSaveNote(SAVE_FAIL);
+    }
   }
 
   function edit() {
@@ -117,6 +140,8 @@ export default function ChatPage() {
     }
     if (kind === 'health' || kind === 'money') {
       add({ kind: 'user', text: value }, { kind: 'guard', text: guardrailReply(kind) });
+      setFlagText(value);
+      add({ kind: 'bot', text: 'Do you want me to save your question so the Ecova team can review it?' });
       return;
     }
     // ok
@@ -130,15 +155,63 @@ export default function ChatPage() {
     add({ kind: 'user', text: value });
     if (step === 'q1') {
       add({ kind: 'guard', text: guardrailReply('offtopic') });
+      setFlagText(value);
+      add({ kind: 'bot', text: 'Do you want me to save your question so the Ecova team can review it?' });
     } else if (step === 'result') {
       add({ kind: 'guard', text: guardrailReply('offtopic') });
+      setFlagText(value);
+      add({ kind: 'bot', text: 'Do you want me to save your question so the Ecova team can review it?' });
     } else {
       add({ kind: 'bot', text: 'Please tap one of the buttons above to continue.' });
     }
   }
 
 
+  async function answerFlag(yes) {
+    const q = flagText;
+    setFlagText(null);
+    if (!yes) {
+      add({ kind: 'user', text: 'No thanks' }, { kind: 'bot', text: `No problem. ${TOPIC_HINT}` });
+      return;
+    }
+    add({ kind: 'user', text: 'Yes, save it' });
+    if (!supabase) {
+      add({ kind: 'bot', text: SAVE_FAIL });
+      return;
+    }
+    try {
+      const { error } = await supabase.from('chat_sessions').insert({
+        status: 'flagged',
+        flagged_text: q.slice(0, 300),
+      });
+      if (error) throw error;
+      add({ kind: 'saved', text: 'Your question was saved for the Ecova team. Thank you!' });
+    } catch (e) {
+      add({ kind: 'bot', text: SAVE_FAIL });
+    }
+  }
 
+  async function sendFeedback() {
+    if (!rating) return;
+    let safeComment = comment.trim().slice(0, 200);
+    const k = checkMessage(safeComment);
+    if (safeComment && (k === 'personal' || k === 'harm')) safeComment = '';
+    if (!supabase || !sessionId) {
+      setFeedbackDone(SAVE_FAIL);
+      return;
+    }
+    try {
+      const { error } = await supabase.from('chat_feedback').insert({
+        session_id: sessionId,
+        rating,
+        comment: safeComment || null,
+      });
+      if (error) throw error;
+      setFeedbackDone('Thanks for your feedback!');
+    } catch (e) {
+      setFeedbackDone(SAVE_FAIL);
+    }
+  }
 
   function renderMessage(m, i) {
     if (m.kind === 'user') return <ChatMessage key={i} from="user">{m.text}</ChatMessage>;
@@ -215,9 +288,47 @@ export default function ChatPage() {
           </div>
         )}
 
+        {flagText && (
+          <div className="flex gap-2">
+            <button onClick={() => answerFlag(true)} className="rounded-full bg-leaf text-white px-4 py-2 text-sm">Yes, save it</button>
+            <button onClick={() => answerFlag(false)} className="rounded-full border border-lake text-lake px-4 py-2 text-sm">No thanks</button>
+          </div>
+        )}
 
         {step === 'result' && (
           <div className="space-y-3">
+            {saveNote && <p className="text-xs text-ink/50" data-testid="save-note">{saveNote}</p>}
+            {!feedbackDone ? (
+              <div className="rounded-2xl border border-lake/20 bg-white p-4 text-sm space-y-3">
+                <div className="flex items-center gap-3">
+                  <span className="text-ink/70">Was this helpful?</span>
+                  <button
+                    aria-label="Thumbs up"
+                    onClick={() => setRating('up')}
+                    className={`rounded-full border px-3 py-1 ${rating === 'up' ? 'bg-leaf text-white border-leaf' : 'border-leaf text-leaf'}`}
+                  >👍</button>
+                  <button
+                    aria-label="Thumbs down"
+                    onClick={() => setRating('down')}
+                    className={`rounded-full border px-3 py-1 ${rating === 'down' ? 'bg-rust text-white border-rust' : 'border-rust text-rust'}`}
+                  >👎</button>
+                </div>
+                <input
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  maxLength={200}
+                  placeholder="Optional comment (no personal information)"
+                  className="w-full rounded-full border border-forest/20 px-4 py-2 text-sm"
+                />
+                <button
+                  onClick={sendFeedback}
+                  disabled={!rating}
+                  className="rounded-full bg-lake text-white px-4 py-2 text-sm disabled:opacity-40"
+                >Send feedback</button>
+              </div>
+            ) : (
+              <p className="text-sm text-forest" data-testid="feedback-done">{feedbackDone}</p>
+            )}
           </div>
         )}
 
