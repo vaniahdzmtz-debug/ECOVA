@@ -18,9 +18,10 @@ function Choices({ options, onPick }) {
         <button
           key={o.value}
           onClick={() => onPick(o)}
-          className="rounded-full border border-lake text-lake bg-white px-4 py-2 text-sm hover:bg-sky transition-colors"
+          className="rounded-2xl border border-lake text-lake bg-white px-4 py-2 text-sm text-left hover:bg-sky transition-colors"
         >
-          {o.label}
+          <span className="block font-medium">{o.label}</span>
+          {o.hint && <span className="block text-xs text-ink/60">{o.hint}</span>}
         </button>
       ))}
     </div>
@@ -41,7 +42,7 @@ export default function ChatPage() {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    setMessages((m) => [...m, { kind: 'bot', text: '1 of 3. What are you deciding about?' }]);
+    setMessages((m) => [...m, { kind: 'bot', text: '1 of 3. What are you deciding about? Pick the topic that fits best.' }]);
   }, []);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ export default function ChatPage() {
   const add = (...items) => setMessages((m) => [...m, ...items]);
 
   function startOver() {
-    setMessages([{ kind: 'bot', text: INTRO }, { kind: 'bot', text: '1 of 3. What are you deciding about?' }]);
+    setMessages([{ kind: 'bot', text: INTRO }, { kind: 'bot', text: '1 of 3. What are you deciding about? Pick the topic that fits best.' }]);
     setStep('q1');
     setAnswers({});
     setFlagText(null);
