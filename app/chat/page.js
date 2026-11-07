@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import ChatMessage from '../../components/ChatMessage';
 import {
   TOPICS, PRIORITIES, FREQUENCIES, INTRO, LABEL, TOPIC_HINT,
+  recommend, summaryLine, labelFor,
 } from '../../lib/chatLogic';
 
 const SAVE_FAIL = 'Results could not be saved right now.';
