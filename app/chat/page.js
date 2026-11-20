@@ -242,6 +242,34 @@ export default function ChatPage() {
           <p className="text-sm text-ink/80 mb-2">{r.reason}</p>
           <p className="text-sm text-ink/80 mb-2">{r.frequencyNote}</p>
           {r.tip && <p className="text-sm text-ink/80 mb-3">{r.tip}</p>}
+          {r.balance && (
+            <div className="rounded-xl border border-lake/20 bg-sky/40 p-3 mb-3 text-sm" data-testid="balance-table">
+              <p className="text-xs font-medium uppercase tracking-wide text-lakeDeep mb-2">Balance score (0 to 2 points each)</p>
+              <table className="w-full text-xs">
+                <thead>
+                  <tr className="text-left text-ink/60">
+                    <th className="py-1 pr-2">&nbsp;</th>
+                    <th className="py-1 pr-2">{r.options[0].name}</th>
+                    <th className="py-1">{r.options[1].name}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {r.balance.rows.map((row) => (
+                    <tr key={row.label}>
+                      <td className="py-0.5 pr-2 text-ink/70">{row.label}</td>
+                      <td className="py-0.5 pr-2">{row.low}</td>
+                      <td className="py-0.5">{row.high}</td>
+                    </tr>
+                  ))}
+                  <tr className="font-medium text-forest border-t border-lake/20">
+                    <td className="py-1 pr-2">Total</td>
+                    <td className="py-1 pr-2">{r.balance.totals.low}</td>
+                    <td className="py-1">{r.balance.totals.high}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          )}
           <div className="grid sm:grid-cols-2 gap-3 text-sm">
             {r.options.map((o) => (
               <div key={o.id} className={`rounded-xl p-3 ${o.impact_level === 'low' ? 'bg-mint' : 'bg-sky'}`}>
