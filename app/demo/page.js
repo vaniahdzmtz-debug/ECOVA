@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { STEPS, AGENT_MAP, AGENT_NOTE, IMPACT, ROADMAP } from '../../lib/demoContent';
+import { STEPS, HOW_IT_WORKS, DECIDES, AGENT_MAP, AGENT_NOTE, IMPACT, ROADMAP } from '../../lib/demoContent';
 
-const TABS = ['Walkthrough', 'Agent map', 'Impact check', 'Version 2'];
+const TABS = ['Walkthrough', 'How Ecova decides', 'Agent map', 'Impact check', 'Version 2'];
 
 export default function DemoPage() {
   const [tab, setTab] = useState('Walkthrough');
@@ -40,17 +40,24 @@ export default function DemoPage() {
 
       {tab === 'Walkthrough' && (
         <section data-testid="walkthrough">
+          <div className="bg-sky/50 border border-lake/20 rounded-2xl p-5 mb-6" data-testid="how-it-works">
+            <h2 className="font-display text-lg text-forest mb-2">How this demo works</h2>
+            <ol className="list-decimal pl-5 text-sm text-ink/80 space-y-1">
+              {HOW_IT_WORKS.map((t) => <li key={t}>{t}</li>)}
+            </ol>
+          </div>
           <p className="text-sm text-ink/60 mb-3" data-testid="step-count">
             Step {step + 1} of {STEPS.length}
           </p>
           <div className="bg-card border border-lake/15 rounded-3xl p-6 md:p-8">
             <h2 className="font-display text-2xl text-forest mb-3">{s.title}</h2>
+            <p className="text-sm font-medium text-lakeDeep mb-2" data-testid="best-if">{s.best}</p>
             <p className="text-ink/80 mb-3">{s.what}</p>
             <p className="text-sm text-ink/70 mb-5">
               <span className="font-medium text-forest">What to look for: </span>
               {s.look}
             </p>
-            <Link href={s.path} className="inline-block rounded-full bg-leaf text-white px-5 py-2 text-sm">
+            <Link href={s.path} target="_blank" rel="noopener noreferrer" className="inline-block rounded-full bg-leaf text-white px-5 py-2 text-sm">
               Open {s.path === '/' ? 'Home' : s.path}
             </Link>
           </div>
@@ -69,6 +76,37 @@ export default function DemoPage() {
             >
               Next
             </button>
+          </div>
+        </section>
+      )}
+
+      {tab === 'How Ecova decides' && (
+        <section data-testid="decides" className="space-y-6">
+          <p className="text-ink/80">{DECIDES.intro}</p>
+          <div className="bg-card border border-lake/15 rounded-2xl p-5">
+            <h2 className="font-display text-xl text-forest mb-2">The levels</h2>
+            <ul className="list-disc pl-5 text-sm text-ink/80 space-y-1">
+              {DECIDES.levels.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+          <div className="bg-card border border-lake/15 rounded-2xl p-5">
+            <h2 className="font-display text-xl text-forest mb-2">The rules</h2>
+            <p className="text-sm text-ink/80 mb-3">{DECIDES.core}</p>
+            <ul className="list-disc pl-5 text-sm text-ink/80 space-y-1">
+              {DECIDES.chat.map((t) => <li key={t}>{t}</li>)}
+            </ul>
+          </div>
+          <div className="bg-card border border-clay/30 rounded-2xl p-5" data-testid="reliability">
+            <h2 className="font-display text-xl text-forest mb-2">How reliable is it?</h2>
+            <p className="text-sm text-ink/80">{DECIDES.reliability}</p>
+          </div>
+          <div className="bg-card border border-lake/15 rounded-2xl p-5">
+            <h2 className="font-display text-xl text-forest mb-2">{DECIDES.whyTitle}</h2>
+            <ul className="space-y-2 text-sm text-ink/80">
+              {DECIDES.why.map((w) => (
+                <li key={w.item}><span className="font-medium text-forest">{w.item}: </span>{w.text}</li>
+              ))}
+            </ul>
           </div>
         </section>
       )}
