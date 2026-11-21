@@ -36,3 +36,20 @@
 ## Later
 - About page — explains how ratings are decided and sourced
 - Expand the `/core` comparison list beyond the first 6 items
+
+## Week 6 — Final integration (this build)
+- `/demo`, `/dashboard`, `/docs` added; "Best balance" added to `/chat`
+- No new Supabase tables
+- Status: complete
+
+## Version 2 (planned)
+- Add sources for impact levels and regularly updated prices
+- Add more products and brands, and more topics
+- Review the /core point rule (high convenience currently scores 0)
+- Link chat results to the /core comparison
+- Spanish version
+
+## Version 3 (ideas)
+- Admin page to review flagged questions
+- Saved history for each person
+- More ways to choose

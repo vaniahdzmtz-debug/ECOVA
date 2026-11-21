@@ -97,19 +97,27 @@ See `ROADMAP.md`.
 
 ### Self-test results (Week 5)
 
-1. **S1** — Three answer combinations gave the expected recommendation: water / lowest price / every day gave the reusable bottle with the 9 to 13 bottles note; water / lowest price / rarely gave bottled water; clothing / lowest impact / a few times a week gave second-hand clothing. Result: passed.
-2. **S2** — A health question and an off-topic question were refused. A typed email was hidden and not saved. The off-topic question was saved for team review with status `flagged`. Result: passed.
-3. **S3** — A finished chat and a thumbs up created one row in `chat_sessions` and one row in `chat_feedback` with the same session id. Result: passed.
+1. **S1** — Three answer combinations gave the expected recommendation. Result: _pending_
+2. **S2** — Health question, off-topic question and email address were handled by guardrails. Result: _pending_
+3. **S3** — A finished chat and a thumbs up created one row in each table. Result: _pending_
 
-### External tests (Week 5)
+## Week 6: Final integration (/demo, /dashboard, /docs)
 
-Three people who are not the developer tested `/chat` on their phones or computers.
+- `/demo` is a guided walkthrough with five tabs: Walkthrough, How Ecova decides, Agent map, Impact check and Version 2.
+- `/dashboard` shows real counts from Supabase (completed and flagged chats, feedback, A/B votes, saved assets) and never shows what people typed. It also lists the testing summary.
+- `/docs` has the prompt library and the build logs.
+- `/chat` has a new "Best balance" option that scores price, impact and effort (0 to 2 points each) and shows a score table. This is the tester suggestion "more options".
+- Everything is still rule-based. No AI runs inside the site.
 
-1. **Fernanda** — The first-question buttons were confusing. Changed: each button now has a short example, and the question says "Pick the topic that fits best."
-2. **Danonino** — Wanted links or online examples with the recommendation. Not changed: outside this week's scope, saved as a next-version idea.
-3. **Third tester** — Wanted more options than price and impact. Not changed: outside this week's scope, saved as a next-version idea.
+### Self-test results (Week 6)
 
-### Bugs found and fixed (Week 5)
+1. **S4 Best balance** — Pass. Water, Best balance, Rarely gave a 4 to 4 tie and the greener option won; the score table showed.
+2. **S5 Dashboard** — Pass. 22 completed + 3 flagged = 25 rows, same as Supabase; 13 saved assets in both.
+3. **S6 Regression** — Pass. All 10 menu pages loaded with no error.
+4. **External testers** — 5 people outside my circle tested the live site. Findings and changes are in the Testing summary on `/dashboard`.
 
-- The page crashed on the "Is this right?" step because one helper function was missing from an import. Fixed and redeployed.
-- The price sentence in the water result read awkwardly. Reworded.
+### Iteration (Week 6)
+
+- Testers said they did not know where to start, how scores work, or where the information comes from.
+- Improvement: tutorial box, "Best if..." lines and a "How Ecova decides" tab on `/demo`.
+- Not built (Version 2): more products and brands, regularly updated prices, sources for impact levels.
