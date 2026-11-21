@@ -29,6 +29,9 @@ export default function Footer() {
           <Link href="/demo" className="hover:text-forest transition-colors">
             Demo
           </Link>
+          <Link href="/dashboard" className="hover:text-forest transition-colors">
+            Dashboard
+          </Link>
           <Link href="/docs" className="hover:text-forest transition-colors">
             Docs
           </Link>
